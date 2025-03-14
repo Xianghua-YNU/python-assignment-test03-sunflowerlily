@@ -20,9 +20,17 @@ jobs:
         timeout: 10
         max-score: 10
         setup-command: ''
+    - name: test_add.py
+      id: test_add-py
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 10
+        setup-command: ''
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST_FAC-PY_RESULTS: "${{steps.test_fac-py.outputs.result}}"
+        TEST_ADD-PY_RESULTS: "${{steps.test_add-py.outputs.result}}"
       with:
-        runners: test_fac-py
+        runners: test_fac-py,test_add-py
