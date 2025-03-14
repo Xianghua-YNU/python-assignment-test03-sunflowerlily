@@ -13,20 +13,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: test_add.py
-      id: test_add-py
-      uses: classroom-resources/autograding-io-grader@v1
-      with:
-        test-name: test_add.py
-        setup-command: ''
-        command: pytest
-        input: ''
-        expected-output: ''
-        comparison-method: exact
-        timeout: 10
-        max-score: 10
     - name: test_fac.py
       id: test_fac-py
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        max-score: 10
+        setup-command: ''
+    - name: test_add.py
+      id: test_add-py
       uses: classroom-resources/autograding-python-grader@v1
       with:
         timeout: 10
@@ -35,7 +30,7 @@ jobs:
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        TEST_ADD-PY_RESULTS: "${{steps.test_add-py.outputs.result}}"
         TEST_FAC-PY_RESULTS: "${{steps.test_fac-py.outputs.result}}"
+        TEST_ADD-PY_RESULTS: "${{steps.test_add-py.outputs.result}}"
       with:
-        runners: test_add-py,test_fac-py
+        runners: test_fac-py,test_add-py
